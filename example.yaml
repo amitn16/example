@@ -7,5 +7,7 @@
         name: nfs-utils
       when: ansible_os_family == "RedHat"
     - apt:
-        name: vim nfs-common
+        name:
+          - vim
+          - nfs-common
       when: ansible_os_family == "Debian"
