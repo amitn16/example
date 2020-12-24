@@ -4,8 +4,8 @@
   become: true
   tasks:
     - yum:
-        name: vim
+        name: nfs-utils
       when: ansible_os_family == "RedHat"
     - apt:
-        name: vim
+        name: nfs-common
       when: ansible_os_family == "Debian"
