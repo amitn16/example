@@ -4,7 +4,7 @@
   become: true
   tasks:
     - yum:
-        name: bind-utils
+        name: vim
       when: ansible_os_family == "RedHat"
     - apt:
         name: vim
