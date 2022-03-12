@@ -4,10 +4,5 @@
   become: true
   tasks:
     - yum:
-        name: nfs-utils
-      when: ansible_os_family == "RedHat"
-    - apt:
-        name:
-          - vim
-          - nfs-common
-      when: ansible_os_family == "Debian"
+        name: httpd
+        state: latest
