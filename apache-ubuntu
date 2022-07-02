@@ -1,6 +1,0 @@
----
-- hosts: web
-  become: True
-  tasks:
-    - name: install httpd alone
-      apt: name=apache2 update_cache=yes state=latest
