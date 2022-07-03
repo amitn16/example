@@ -86,8 +86,8 @@ resource "google_compute_instance" "dev" {
  #  ssh-keys = "${var.user}:${file(var.publickeypath)}"
  # }
 metadata = {
-    "sudo yum -y install epel-release"
-    "sudo yum -y install ngin"
-    "sudo nginx -v"
+    sudo yum -y install epel-release
+    sudo yum -y install ngin
+    sudo nginx -v
   }
 }
