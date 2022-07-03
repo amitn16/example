@@ -86,6 +86,6 @@ resource "google_compute_instance" "dev" {
  #  ssh-keys = "${var.user}:${file(var.publickeypath)}"
  # }
 metadata = {
-        startup-script = startup.sh
+        startup-script = startup
     }
 }
