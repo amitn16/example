@@ -3,7 +3,7 @@ provider "google" {
   region  = var.region
 }
 
-resource "google_project" "my_project" {
+resource "google_project" "project" {
   name       = "My Project"
   project_id = "my-project-lab1-351507"
   org_id     = "1234567"
