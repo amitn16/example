@@ -82,7 +82,7 @@ resource "google_compute_instance" "dev" {
     scopes = ["compute-ro"]
   }
 
-  metadata = {
-    ssh-keys = "${var.user}:${file(var.publickeypath)}"
-  }
+ # metadata = {
+ #  ssh-keys = "${var.user}:${file(var.publickeypath)}"
+ # }
 }
