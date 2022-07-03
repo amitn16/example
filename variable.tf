@@ -1,15 +1,24 @@
-variable "machine_type" {
-    default = "e2-micro"
+variable "region" {
+    type = string
+    default = "us-central"
 }
-
-variable "name" {
+variable "project" {
     type = string
 }
 
-variable "zone" {
-    default = "asia-south1-a"
+variable "user" {
+    type = string
 }
 
-variable "image" {
-    default = "rhel-cloud/rhel-7"
+variable "email" {
+    type = string
+}
+variable "privatekeypath" {
+    type = string
+    default = "~/.ssh/id_rsa"
+}
+
+variable "publickeypath" {
+    type = string
+    default = "~/.ssh/id_rsa.pub"
 }
