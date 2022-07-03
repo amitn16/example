@@ -5,5 +5,5 @@ provider "google" {
 
 resource "google_app_engine_application" "app" {
   project = var.project
-  region = var.region 
+  location_id = "us-central"
   }
