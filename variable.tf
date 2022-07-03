@@ -3,7 +3,7 @@ variable "machine_type" {
 }
 
 variable "name" {
-    default = string
+    default = "string"
 }
 
 variable "zone" {
