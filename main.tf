@@ -58,7 +58,7 @@ resource "google_compute_instance" "dev" {
     }
   }
 
-  provisioner "remote-exec" {
+/*  provisioner "remote-exec" {
     connection {
       host        = google_compute_address.static.address
       type        = "ssh"
@@ -81,7 +81,7 @@ resource "google_compute_instance" "dev" {
     email  = var.email
     scopes = ["compute-ro"]
   }
-
+*/
  # metadata = {
  #  ssh-keys = "${var.user}:${file(var.publickeypath)}"
  # }
