@@ -10,6 +10,10 @@ variable "user" {
     type = string
 }
 
+variable "name" {
+    type = string
+}
+
 variable "email" {
     type = string
 }
