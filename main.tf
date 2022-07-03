@@ -5,7 +5,7 @@ resource "google_compute_instance" "firstvm" {
   zone = var.zone
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-9"
+      image = "rhel-cloud/rhel-7"
     }
   }
   network_interface {
