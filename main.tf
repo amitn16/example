@@ -13,7 +13,7 @@ resource "google_compute_instance" "firstvm" {
   }
 }
 
-resource "google_compute_instance" "firstvm" {
+resource "google_compute_instance" "firstvm1" {
   machine_type = var.machine_type
   name = var.name
   zone = var.zone
