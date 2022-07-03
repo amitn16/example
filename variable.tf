@@ -3,9 +3,13 @@ variable "machine_type" {
 }
 
 variable "name" {
-    default = "prod-server1"
+    default = "prod-server2"
 }
 
 variable "zone" {
     default = "asia-south1-a"
+}
+
+variable "image" {
+    default = "rhel-cloud/rhel-7"
 }
