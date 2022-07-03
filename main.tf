@@ -5,7 +5,7 @@ resource "google_compute_instance" "firstvm" {
   zone = var.zone
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1604-lts"
+      image = "debian-cloud/debian-9"
     }
   }
   network_interface {
