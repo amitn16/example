@@ -10,7 +10,7 @@ resource "google_project" "my_project-in-a-folder" {
 }
 
 resource "google_folder" "department1" {
-  display_name = "BU1"
+  display_name = "BU2"
   parent       = "bruttech.com/277860026539"
 }
 
