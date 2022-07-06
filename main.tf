@@ -10,7 +10,7 @@ resource "google_storage_bucket" "my-project-lab1-351507" {
 resource "google_storage_bucket_object" "archive" {
   name   = "index.zip"
   bucket = google_storage_bucket.my-project-lab1-351507.name
-  source = "./code"
+  source = "./code/index.zip"
 }
 
 resource "google_cloudfunctions_function" "function" {
