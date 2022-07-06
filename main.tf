@@ -16,9 +16,9 @@ resource "google_project" "my_project-in-a-folder" {
   project_id = "my-project-lab3-351509"
   }
 
-resource "google_folder" "BU1" {
-  display_name = "BU1"
-  parent       = "bruttech.com/277860026539"
+resource "google_folder" "BU2" {
+  display_name = "BU2"
+  parent       = "organizations/277860026539"
 }
 
 /*
