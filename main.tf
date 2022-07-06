@@ -2,16 +2,6 @@ provider "google" {
   project = var.project
   region  = var.region
 }
-resource "google_storage_bucket" "my-project-lab1-351507" {
-  name     = "test-bucket-my-project-lab1-351507"
-  location = "US"
-}
-
-resource "google_storage_bucket_object" "archive" {
-  name   = "index.zip"
-  bucket = google_storage_bucket.my-project-lab1-351507.name
-  source = "./code/index.zip"
-}
 
 resource "google_cloudfunctions_function" "function" {
   name        = "function-test"
