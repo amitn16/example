@@ -3,6 +3,18 @@ provider "google" {
   region  = var.region
 }
 
+resource "google_project" "my_project-in-a-folder" {
+  name       = "My Project"
+  project_id = "your-project-id"
+  folder_id  = google_folder.department1.name
+}
+
+resource "google_folder" "department1" {
+  display_name = "BU1"
+  parent       = "bruttech.com/277860026539"
+}
+
+/*
 resource "google_compute_firewall" "firewall" {
   name    = "firewall-externalssh"
   network = "default"
@@ -58,7 +70,7 @@ resource "google_compute_instance" "dev" {
     }
   }
 
-/*  provisioner "remote-exec" {
+ provisioner "remote-exec" {
     connection {
       host        = google_compute_address.static.address
       type        = "ssh"
@@ -81,9 +93,9 @@ resource "google_compute_instance" "dev" {
     email  = var.email
     scopes = ["compute-ro"]
   }
-*/
+
  # metadata = {
  #  ssh-keys = "${var.user}:${file(var.publickeypath)}"
  # }
 metadata_startup_script = file("${path.module}/startup.sh")
-}
+*/
