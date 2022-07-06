@@ -19,10 +19,6 @@ resource "google_cloudfunctions_function" "function" {
   runtime     = "nodejs16"
 
   available_memory_mb   = 128
-  source_archive_bucket = google_storage_bucket.my-project-lab1-351507.name
-  source_archive_object = google_storage_bucket_object.archive.name
-  trigger_http          = true
-  entry_point           = "helloGET"
 }
 
 # IAM entry for all users to invoke the function
