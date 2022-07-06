@@ -3,6 +3,13 @@ provider "google" {
   region  = var.region
 }
 
+resource "google_project" "my_project" {
+  name       = "My Project"
+  project_id = "my-project-lab2-351508"
+  org_id     = "277860026539"
+}
+
+/*
 resource "google_project" "my_project-in-a-folder" {
   name       = "My Project"
   project_id = "your-project-id"
@@ -14,7 +21,7 @@ resource "google_folder" "BU1" {
   parent       = "bruttech.com/277860026539"
 }
 
-/*
+
 resource "google_compute_firewall" "firewall" {
   name    = "firewall-externalssh"
   network = "default"
