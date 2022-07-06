@@ -9,9 +9,9 @@ resource "google_project" "my_project-in-a-folder" {
   folder_id  = google_folder.department1.name
 }
 
-resource "google_folder" "department1" {
-  display_name = "Department 1"
-  parent       = "organizations/1234567"
+resource "google_folder" "BU1" {
+  display_name = "BU 1"
+  parent       = "bruttech.com/277860026539"
 }
 
 /*
