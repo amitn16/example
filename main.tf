@@ -14,6 +14,7 @@ resource "google_project" "my_project" {
 resource "google_project" "my_project-in-a-folder" {
   name       = "My Project 1"
   project_id = "my-project-lab3-351509"
+  folder_id  = google_folder.BU2.name
   }
 
 resource "google_folder" "BU2" {
