@@ -9,9 +9,9 @@ resource "google_storage_bucket" "bucketamit2203" {
 }
 
 resource "google_storage_bucket_object" "archive" {
-  name   = "function.zip"
+  name   = "archive"
   bucket = google_storage_bucket.bucketamit2203.name
-  source = "function.zip"
+  source = "code/function.zip"
 }
 resource "google_cloudfunctions_function" "function" {
   name        = "function-test"
