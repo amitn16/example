@@ -24,6 +24,7 @@ module "vpc" {
             subnet_flow_logs      = "true"
             description           = "This subnet has a description"
         },
+        
         {
             subnet_name               = "subnet-03"
             subnet_ip                 = "10.10.30.0/24"
