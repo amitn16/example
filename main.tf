@@ -7,3 +7,9 @@ resource "google_storage_bucket" "bucketamit2203" {
   name     = "bucketamit2203"
   location = "US"
 }
+
+resource "google_storage_bucket_object" "archive" {
+  name   = "function-source.zip"
+  bucket = google_storage_bucket.bucketamit2203.name
+  source = "./code"
+}
