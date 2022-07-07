@@ -11,7 +11,7 @@ resource "google_storage_bucket" "bucketamit2203" {
 resource "google_storage_bucket_object" "archive" {
   name   = "function.zip"
   bucket = google_storage_bucket.bucketamit2203.name
-  source = "/code/function.zip"
+  source = "function.zip"
 }
 resource "google_cloudfunctions_function" "function" {
   name        = "function-test"
