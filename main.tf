@@ -4,7 +4,7 @@ provider "google" {
 }
 
 resource "google_storage_bucket" "bucketamit2203" {
-  name     = "test-bucket"
+  name     = "bucketamit2203"
   location = "US"
 }
 
