@@ -39,3 +39,4 @@ resource "google_cloudfunctions_function_iam_member" "invoker" {
 
   role   = "roles/cloudfunctions.invoker"
   member = "allUsers"
+  }
