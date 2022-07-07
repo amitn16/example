@@ -9,7 +9,7 @@ resource "google_storage_bucket" "bucketamit2203" {
 }
 
 resource "google_storage_bucket_object" "archive" {
-  name   = "function-source.zip"
+  name   = "function.zip"
   bucket = google_storage_bucket.bucketamit2203.name
-  source = "./code"
+  source = "./code/function.zip"
 }
