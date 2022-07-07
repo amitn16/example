@@ -3,14 +3,14 @@ provider "google" {
   region  = var.region
 }
 
-resource "google_storage_bucket" "bucket-my-project-lab1-351507" {
+resource "google_storage_bucket" "bucket-my-project-lab1-351507-2" {
   name     = "test-bucket"
   location = "US"
 }
 
 resource "google_storage_bucket_object" "archive" {
   name   = "index.zip"
-  bucket = google_storage_bucket.bucket-my-project-lab1-351507.name
+  bucket = google_storage_bucket.bucket-my-project-lab1-351507-2.name
   source = "./code"
 }
 
@@ -20,7 +20,7 @@ resource "google_cloudfunctions_function" "function" {
   runtime     = "nodejs16"
 
   available_memory_mb   = 128
-  source_archive_bucket = google_storage_bucket.bucket-my-project-lab1-351507.name
+  source_archive_bucket = google_storage_bucket.bucket-my-project-lab1-351507-2.name
   source_archive_object = google_storage_bucket_object.archive.name
   trigger_http          = true
   entry_point           = "helloGET"
