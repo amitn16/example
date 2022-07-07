@@ -5,6 +5,7 @@ provider "google" {
 
 resource "google_storage_bucket" "bucket" {
   name = "terraform-gcp-amit121201"
+  location = "US"
 }
 
 resource "google_storage_bucket_object" "archive" {
