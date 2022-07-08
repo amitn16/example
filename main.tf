@@ -4,7 +4,7 @@ provider "google" {
   }
 
 resource "google_project_service" "serviceusage-api" {
-  project = var.gcp_project
+  project = var.project
   service = "serviceusage.googleapis.com"
 }
 
