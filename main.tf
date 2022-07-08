@@ -1,6 +1,10 @@
 provider "google" {
   project = var.project
   region  = var.region
+  }
+
+resource "google_project_service" "serviceusage-api" {
+  project = var.gcp_project
   service = "serviceusage.googleapis.com"
 }
 
