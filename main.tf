@@ -2,13 +2,10 @@ provider "google" {
   project = var.project
   region  = var.region
   }
-provider "google" {
-  project = var.project
-  region  = var.region
-  }
+
 
 resource "google_cloud_run_service" "default" {
-  name     = "cloudrun-srv"
+  name     = "cloudrun-srv1"
   location = "us-central1"
 
   template {
