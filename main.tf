@@ -12,7 +12,7 @@ resource "google_cloud_run_service" "nginx-service-1" {
       containers {
         image = "marketplace.gcr.io/google/nginx1"
         ports {
-          container_port = 8080
+          container_port = 80
         }
       }
     }
