@@ -1,6 +1,7 @@
 provider "google" {
   project = var.project
   region  = var.region
+  service = "serviceusage.googleapis.com"
 }
 
 resource "google_cloud_run_service" "nginx-service-1" {
