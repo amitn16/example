@@ -5,7 +5,7 @@ provider "google" {
 
 resource "google_project_service" "project" {
   project = "project-lab1-351507"
-  service = "iam.googleapis.com"
+  service = "serviceusage.googleapis.com"
 
   disable_dependent_services = true
 }
