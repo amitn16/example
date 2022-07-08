@@ -5,7 +5,8 @@ provider "google" {
 
 resource "google_project_service" "serviceusage-api" {
   project = var.project
-  service = "serviceusage.googleapis.com"
+  service = "iam.googleapis.com"
+  disable_dependent_services = true
 }
 
 resource "google_cloud_run_service" "nginx-service-1" {
