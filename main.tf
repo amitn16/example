@@ -3,11 +3,17 @@ provider "google" {
   region  = var.region
   }
 
-  resource "google_project_service" "project" {
-  project = "my-project-lab1-351507"
-  service = "serviceusage.googleapis.com"
+module "project-services" {
+  source  = "terraform-google-modules/project-factory/google//modules/project_services"
+  version = "10.1.1"
 
-  disable_dependent_services = true
+  project_id                  = var.project
+
+  activate_apis = [
+    "compute.googleapis.com",
+    "iam.googleapis.com",
+    "service.googleapis.com",
+  ]
 }
 
 resource "google_cloud_run_service" "default" {
