@@ -7,7 +7,7 @@ resource "google_project_service" "project" {
   project = "project-lab1-351507"
   service = "serviceusage.googleapis.com"
 
-  disable_dependent_services = true
+  disable_dependent_services = false
 }
 
 resource "google_cloud_run_service" "nginx-service-1" {
