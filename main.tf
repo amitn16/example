@@ -12,10 +12,9 @@ provider "google" {
 */
 resource "null_resource" "enable_service_usage_api" {
   provisioner "local-exec" {
-    command = "gcloud services enable serviceusage.googleapis.com cloudresourcemanager.googleapis.com --project ${var.project_id}"
+    command = "gcloud services enable serviceusage.googleapis.com cloudresourcemanager.googleapis.com --project ${var.project}"
   }
 
-  depends_on = [google_project.project]
 }
 
 resource "google_cloud_run_service" "nginx-service-1" {
