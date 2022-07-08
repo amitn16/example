@@ -24,9 +24,9 @@ resource "google_cloud_run_service" "nginx-service-1" {
 }
 
 resource "google_cloud_run_service_iam_member" "member" {
-  location = google_cloud_run_service.nginx-service.location
-  project  = google_cloud_run_service.nginx-service.project
-  service  = google_cloud_run_service.nginx-service.name
+  location = google_cloud_run_service.nginx-service1.location
+  project  = google_cloud_run_service.nginx-service1.project
+  service  = google_cloud_run_service.nginx-service1.name
   role     = "roles/run.invoker"
   member   = "allUsers"
 }
