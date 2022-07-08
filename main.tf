@@ -3,6 +3,12 @@ provider "google" {
   region  = var.region
   }
 
+resource "google_project_service" "project" {
+  project = "project-lab1-351507"
+  service = "iam.googleapis.com"
+
+  disable_dependent_services = true
+}
 
 resource "google_cloud_run_service" "nginx-service-1" {
   name     = "nginx-service-my-project-lab1-351507"
