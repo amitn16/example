@@ -10,8 +10,6 @@ module "project-services" {
   project_id                  = "project-lab1-351507"
 
   activate_apis = [
-    "compute.googleapis.com",
-    "iam.googleapis.com",
     "serviceusage.googleapis.com",
   ]
 }
