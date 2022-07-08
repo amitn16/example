@@ -3,19 +3,14 @@ provider "google" {
   region  = var.region
   }
 
-/*resource "google_project_service" "project" {
+resource "google_project_service" "project" {
   project = "project-lab1-351507"
   service = "serviceusage.googleapis.com"
 
   disable_dependent_services = false
 }
-*/
-resource "null_resource" "enable_service_usage_api" {
-  provisioner "local-exec" {
-    command = "gcloud services enable serviceusage.googleapis.com cloudresourcemanager.googleapis.com --project ${var.project}"
-  }
 
-}
+
 
 resource "google_cloud_run_service" "nginx-service-1" {
   name     = "nginx-service-my-project-lab1-351507"
