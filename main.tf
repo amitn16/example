@@ -3,33 +3,21 @@ provider "google" {
   region  = var.region
   }
 
-module "project-services" {
-  source  = "terraform-google-modules/project-factory/google//modules/project_services"
-  version = "10.1.1"
-
-  project_id                  = var.project
-
-  activate_apis = [
-    "compute.googleapis.com",
-    "iam.googleapis.com",
-    "service.googleapis.com",
-  ]
-}
-
-resource "google_cloud_run_service" "default" {
-  name     = "cloudrun-srv"
-  location = "us-central1"
-
+resource "google_cloud_run_service" "nginx-service" {
+  name = "${var.environment}-nginx-service"
+  location = "europe-west3"
   template {
     spec {
       containers {
-        image = "us-docker.pkg.dev/cloudrun/container/hello"
+        image = "marketplace.gcr.io/google/nginx1"
+        ports {
+          container_port = 80
+        }
       }
     }
   }
-
   traffic {
-    percent         = 100
+    percent = 100
     latest_revision = true
   }
 }
