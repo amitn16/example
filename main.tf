@@ -9,7 +9,6 @@ module "project-factory_example_project_services" {
   # insert the 1 required variable here
   enable = serviceusage.googleapis.com
 }
-}
 
 
 resource "google_cloud_run_service" "default" {
