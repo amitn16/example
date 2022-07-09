@@ -8,7 +8,11 @@ module "project-factory_example_project_services" {
   version = "13.0.0"
   # insert the 1 required variable here
   project_id = var.project_id
+  enable_apis = var.enable
   enable = serviceusage.googleapis.com
+  activate_apis = [
+    "serviceusage.googleapis.com",
+    ]
 }
 
 
