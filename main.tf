@@ -4,14 +4,21 @@ provider "google" {
   
   }
 
-resource "google_container_registry" "registry" {
-  project  = var.project
-  location = "US"
-}
+resource "google_secret_manager_secret" "secret-basic" {
+  secret_id = "app1"
 
-resource "google_storage_bucket_iam_member" "viewer" {
-  bucket = google_container_registry.registry.id
-  role = "roles/storage.objectViewer"
-  member = "user:amit@bruttech.com"
-}
+  labels = {
+    label = "my-label1"
+  }
 
+  replication {
+    user_managed {
+      replicas {
+        location = "us-central1"
+      }
+      replicas {
+        location = "us-east1"
+      }
+    }
+  }
+}
