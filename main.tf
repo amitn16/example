@@ -1,15 +1,15 @@
 provider "google" {
   project = var.project
   region  = var.region
-  project_id = var.project_id
+  
   }
 
 module "project-factory_example_project_services" {
   source  = "terraform-google-modules/project-factory/google//examples/project_services"
   version = "13.0.0"
   # insert the 1 required variable here
-  enable = serviceusage.googleapis.com
-}
+  project_id = var.project_id
+  }
 
 
 resource "google_cloud_run_service" "default" {
