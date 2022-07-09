@@ -4,23 +4,14 @@ provider "google" {
   
   }
 
-module "project-factory_project_services" {
-  source  = "terraform-google-modules/project-factory/google//modules/project_services"
-  version = "13.0.0"
-  # insert the 1 required variable here
-    project_id = "my-project-lab1-351507"
+resource "google_container_registry" "registry" {
+  project  = "project"
+  location = "EU"
 }
 
-resource "google_cloud_run_service" "default" {
-  name     = "cloudrun-srv"
-  location = "us-central1"
-
-  template {
-    spec {
-      containers {
-        image = "us-docker.pkg.dev/cloudrun/container/hello"
-      }
-    }
-  }
+resource "google_storage_bucket_iam_member" "viewer" {
+  bucket = google_container_registry.registry.id
+  role = "roles/storage.objectViewer"
+  member = "user:amit@bruttech.com"
 }
 
