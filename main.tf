@@ -7,6 +7,7 @@ module "project-factory_example_project_services" {
   source  = "terraform-google-modules/project-factory/google//examples/project_services"
   version = "13.0.0"
   # insert the 1 required variable here
+  project_id = var.project_id
   enable = serviceusage.googleapis.com
 }
 
