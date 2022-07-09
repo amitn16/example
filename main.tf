@@ -5,7 +5,7 @@ provider "google" {
   }
 
 resource "google_container_registry" "registry" {
-  project  = "project"
+  project  = var.project
   location = "EU"
 }
 
