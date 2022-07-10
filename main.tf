@@ -205,3 +205,36 @@ resource "google_data_loss_prevention_inspect_template" "basic" {
         }
     }
 }
+###########################################################
+resource "google_data_loss_prevention_job_trigger" "basic" {
+    parent = "projects/my-project-lab1-351507"
+    description = "Job trigger 1"
+    display_name = "job trigger1.1"
+
+    triggers {
+        schedule {
+            recurrence_period_duration = "86400s"
+        }
+    }
+
+    inspect_job {
+        inspect_template_name = "fake"
+        actions {
+            save_findings {
+                output_config {
+                    table {
+                        project_id = "my-project-lab1-351507"
+                        dataset_id = "dlpins"
+                    }
+                }
+            }
+        }
+        storage_config {
+            cloud_storage_options {
+                file_set {
+                    url = "gs://dlins/dlp/"
+                }
+            }
+        }
+    }
+}
