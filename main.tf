@@ -6,8 +6,8 @@ provider "google" {
 
 resource "google_data_loss_prevention_deidentify_template" "basic" {
     parent = "projects/my-project-lab1-351507"
-    description = "Description"
-    display_name = "Displayname"
+    description = "Deidentify using TF"
+    display_name = "DisplaynameFrifrntify template-TF"
 
     deidentify_config {
         info_type_transformations {
