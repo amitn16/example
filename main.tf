@@ -238,3 +238,14 @@ resource "google_data_loss_prevention_job_trigger" "basic" {
         }
     }
 }
+####################################################
+resource "google_data_loss_prevention_stored_info_type" "basic" {
+    parent = "projects/my-project-lab1-351507"
+    description = "InfoType-Sample"
+    display_name = "Infotype-sample-patient"
+
+    regex {
+        pattern = "patient"
+        group_indexes = [2]
+    }
+}
