@@ -5,7 +5,7 @@ provider "google" {
   }
 
 resource "google_data_loss_prevention_deidentify_template" "basic" {
-    parent = "projects/my-project-name"
+    parent = "projects/my-project-lab1-351507"
     description = "Description"
     display_name = "Displayname"
 
