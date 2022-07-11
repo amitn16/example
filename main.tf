@@ -14,6 +14,6 @@ resource "google_dialogflow_agent" "full_agent" {
   enable_logging = true
   match_mode = "MATCH_MODE_ML_ONLY"
   classification_threshold = 0.3
-  api_version = "API_VERSION_V2_BETA_1"
+  api_version = "API_VERSION_V2"
   tier = "TIER_STANDARD"
 }
