@@ -72,7 +72,7 @@ module "cloud-nat-group2" {
 # [START cloudloadbalancing_ext_http_gce]
 module "gce-lb-http" {
 #  source  = "GoogleCloudPlatform/lb-http/google"
-  source = "amitn16/terraform-google-lb-http"
+  source = "app.terraform.io/Bruttech/lb-http/google"
   version = "~> 5.1"
   name    = var.network_prefix
   project = var.project
