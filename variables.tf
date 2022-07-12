@@ -5,7 +5,7 @@ variable "region" {
 
 variable "project" {
     type = string
-    default = "my-project-lab1-351507"
+    default = "lithe-bonito-356116"
 }
 
 variable "environment" {
@@ -16,7 +16,7 @@ variable "environment" {
 variable "project_id" {
   description = "The GCP project you want to enable APIs on"
     type = string
-    default = "my-project-lab1-351507"
+    default = "lithe-bonito-356116"
 }
 
 variable "enable" {
