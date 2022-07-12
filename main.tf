@@ -60,7 +60,8 @@ resource "google_compute_router" "group2" {
 }
 
 module "cloud-nat-group2" {
-  source     = "terraform-google-modules/cloud-nat/google"
+ # source     = "terraform-google-modules/cloud-nat/google"
+  source = "app.terraform.io/Bruttech/cloudnat/google"
   version    = "1.4.0"
   router     = google_compute_router.group2.name
   project_id = var.project
@@ -70,7 +71,8 @@ module "cloud-nat-group2" {
 
 # [START cloudloadbalancing_ext_http_gce]
 module "gce-lb-http" {
-  source  = "GoogleCloudPlatform/lb-http/google"
+#  source  = "GoogleCloudPlatform/lb-http/google"
+  source = "amitn16/terraform-google-lb-http"
   version = "~> 5.1"
   name    = var.network_prefix
   project = var.project
