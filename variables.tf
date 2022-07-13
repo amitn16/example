@@ -47,13 +47,14 @@ variable "network_project" {
 
 variable "name" {
   description = "Name for the forwarding rule and prefix for supporting resources."
+  default = "rule1"
 }
 
-variable "backends" {
+/* variable "backends" {
   description = "List of backends, should be a map of key-value pairs for each backend, must have the 'group' key."
   type        = list(any)
 }
-
+*/
 variable "session_affinity" {
   description = "The session affinity for the backends example: NONE, CLIENT_IP. Default is `NONE`."
   default     = "NONE"
@@ -62,6 +63,7 @@ variable "session_affinity" {
 variable "ports" {
   description = "List of ports range to forward to backend services. Max is 5."
   type        = list(string)
+  default = "80"
 }
 
 variable "all_ports" {
@@ -70,7 +72,7 @@ variable "all_ports" {
   default     = null
 }
 
-variable "health_check" {
+/* variable "health_check" {
   description = "Health check to determine whether instances are responsive and able to do work"
   type = object({
     type                = string
@@ -88,15 +90,17 @@ variable "health_check" {
     enable_log          = bool
   })
 }
-
+*/
 variable "source_tags" {
   description = "List of source tags for traffic between the internal load balancer."
   type        = list(string)
+  default = "internal-1"
 }
 
 variable "target_tags" {
   description = "List of target tags for traffic between the internal load balancer."
   type        = list(string)
+  default = "internal-2"
 }
 
 variable "source_ip_ranges" {
