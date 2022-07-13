@@ -39,4 +39,5 @@ variable "gcp_zone_1" {
 variable "private_subnet_cidr_1" {
   type = string
   description = "private_subnet_CIDR 1"
+  default     = "10.10.1.0/24"
 }
