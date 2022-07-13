@@ -46,8 +46,7 @@ resource "google_compute_router_nat" "nat-gateway" {
   router = google_compute_router.nat-router.name
   nat_ip_allocate_option = "MANUAL_ONLY"
   nat_ips = [ google_compute_address.nat-ip.self_link ]
-  source_subnetwork_ip_ranges_to_nat =
-    "ALL_SUBNETWORKS_ALL_IP_RANGES" 
+  source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES" 
   depends_on = [ google_compute_address.nat-ip ]
 }
 output "nat_ip_address" {
@@ -110,8 +109,7 @@ resource "google_compute_instance" "web_private_1" {
     }
   }
   
-  metadata_startup_script = "sudo apt-get update; 
-    sudo apt-get install -yq build-essential apache2"
+  metadata_startup_script = "sudo apt-get update;sudo apt-get install -yq build-essential apache2"
   network_interface {
     network = google_compute_network.vpc.name
     subnetwork = google_compute_subnetwork.private_subnet_1.name
@@ -130,8 +128,7 @@ boot_disk {
     }
   }
   
-  metadata_startup_script = "sudo apt-get update; 
-    sudo apt-get install -yq build-essential apache2"
+  metadata_startup_script = "sudo apt-get update;sudo apt-get install -yq build-essential apache2"
 network_interface {
     network = google_compute_network.vpc.name
     subnetwork = google_compute_subnetwork.private_subnet_1.name
@@ -143,15 +140,13 @@ output "web-1-name" {
   value = google_compute_instance.web_private_1.name
 }
 output "web-1-internal-ip" {
-  value = google_compute_instance.web_private_1.network_interface.0.
-    network_ip
+  value = google_compute_instance.web_private_1.network_interface.0.network_ip
 }
 output "web-2-name" {
   value = google_compute_instance.web_private_2.name
 }
 output "web-2-internal-ip" {
-  value = google_compute_instance.web_private_2.network_interface.0.
-    network_ip
+  value = google_compute_instance.web_private_2.network_interface.0.network_ip
 }
 ##################################################################
 # Load balancer with unmanaged instance group | lb-unmanaged.tf
@@ -159,8 +154,7 @@ output "web-2-internal-ip" {
 resource "google_compute_global_forwarding_rule" "global_forwarding_rule" {
   name = "${var.app_name}-global-forwarding-rule"
   project = var.project
-  target =
-    google_compute_target_http_proxy.target_http_proxy.self_link
+  target = google_compute_target_http_proxy.target_http_proxy.self_link
   port_range = "80"
 }
 # used by one or more global forwarding rule to route incoming HTTP requests to a URL map
@@ -175,11 +169,9 @@ resource "google_compute_backend_service" "backend_service" {
   project = "${var.project}"
   port_name = "http"
   protocol = "HTTP"
-  health_checks =
-    ["${google_compute_health_check.healthcheck.self_link}"]
+  health_checks = ["${google_compute_health_check.healthcheck.self_link}"]
   backend {
-    group =
-      google_compute_instance_group.web_private_group.self_link
+    group = google_compute_instance_group.web_private_group.self_link
     balancing_mode = "RATE"
     max_rate_per_instance = 100
   }
@@ -211,11 +203,9 @@ resource "google_compute_health_check" "healthcheck" {
 resource "google_compute_url_map" "url_map" {
   name = "${var.app_name}-load-balancer"
   project = var.project
-  default_service =
-    google_compute_backend_service.backend_service.self_link
+  default_service = google_compute_backend_service.backend_service.self_link
 }
 # show external ip address of load balancer
 output "load-balancer-ip-address" {
-  value = google_compute_global_forwarding_rule.
-    global_forwarding_rule.ip_address
+  value = google_compute_global_forwarding_rule.global_forwarding_rule.ip_address
 }
