@@ -50,5 +50,9 @@ boot_disk {
       image = "ubuntu-os-cloud/ubuntu-1804-lts"
     }
   }
- 
+ network_interface {
+    network = google_compute_network.vpc.name
+    subnetwork = google_compute_subnetwork.private_subnet_1.name
+  }
+
 }
