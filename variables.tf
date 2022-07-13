@@ -16,20 +16,20 @@
 
 
 # define GCP project name
-variable "app_project" {
+variable "project" {
   type = string
   description = "GCP project name"
   default = "lithe-bonito-356116"
 }
 
 # define GCP region
-variable "gcp_region_1" {
+variable "region" {
   type = string
   description = "GCP region"
   default     = "us-central"
 }
 # define GCP zone
-variable "gcp_zone_1" {
+variable "zone" {
   type = string
   description = "GCP zone"
   default     = "us-central1"
