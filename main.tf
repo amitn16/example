@@ -34,7 +34,7 @@ resource "google_compute_subnetwork" "default" {
 # Reserved internal address
 resource "google_compute_address" "default" {
   name         = "l7-ilb-ip"
-  provider     = google-beta
+  provider     = google
   subnetwork   = google_compute_subnetwork.default.id
   address_type = "INTERNAL"
   address      = "10.0.1.5"
