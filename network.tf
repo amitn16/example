@@ -7,7 +7,7 @@ resource "google_compute_network" "vpc" {
 
 # create private subnet
 resource "google_compute_subnetwork" "private_subnet_1" {
-  provider = "google"
+  provider = google
   purpose = "PRIVATE"
   name = "${var.app_name}-private-subnet-1"
   ip_cidr_range = var.private_subnet_cidr_1
