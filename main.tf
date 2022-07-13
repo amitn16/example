@@ -3,7 +3,7 @@ provider "google" {
   region  = var.region
 }
 
-# Internal HTTPS load balancer with HTTP-to-HTTPS redirect
+# Internal HTTPS load balancer with HTTP-to-HTTPS redirect - Test
 
 # [START cloudloadbalancing_int_https_with_redirect]
 
