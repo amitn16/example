@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Google LLC
+ * Copyright 2019 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,143 +14,187 @@
  * limitations under the License.
  */
 
-resource "google_compute_network" "default" {
-  name                    = var.network_prefix
-  auto_create_subnetworks = "false"
+# The forwarding rule resource needs the self_link but the firewall rules only need the name.
+# Using a data source here to access both self_link and name by looking up the network name.
+data "google_compute_network" "network" {
+  name    = var.network
+  project = var.network_project == "" ? var.project : var.network_project
 }
 
-resource "google_compute_subnetwork" "group1" {
-  name                     = "${var.network_prefix}-group1"
-  ip_cidr_range            = "10.126.0.0/20"
-  network                  = google_compute_network.default.self_link
-  region                   = var.group1_region
-  private_ip_google_access = true
+data "google_compute_subnetwork" "network" {
+  name    = var.subnetwork
+  project = var.network_project == "" ? var.project : var.network_project
+  region  = var.region
 }
 
-# Router and Cloud NAT are required for installing packages from repos (apache, php etc)
-resource "google_compute_router" "group1" {
-  name    = "${var.network_prefix}-gw-group1"
-  network = google_compute_network.default.self_link
-  region  = var.group1_region
+resource "google_compute_forwarding_rule" "default" {
+  project               = var.project
+  name                  = var.name
+  region                = var.region
+  network               = data.google_compute_network.network.self_link
+  subnetwork            = data.google_compute_subnetwork.network.self_link
+  allow_global_access   = var.global_access
+  load_balancing_scheme = "INTERNAL"
+  backend_service       = google_compute_region_backend_service.default.self_link
+  ip_address            = var.ip_address
+  ip_protocol           = var.ip_protocol
+  ports                 = var.ports
+  all_ports             = var.all_ports
+  service_label         = var.service_label
+  labels                = var.labels
 }
 
-module "cloud-nat-group1" {
-# source     = "terraform-google-modules/cloud-nat/google"
-  source = "app.terraform.io/Bruttech/cloudnat/google"
-  version    = "1.4.0"
-  router     = google_compute_router.group1.name
-  project_id = var.project
-  region     = var.group1_region
-  name       = "${var.network_prefix}-cloud-nat-group1"
-}
-
-resource "google_compute_subnetwork" "group2" {
-  name                     = "${var.network_prefix}-group2"
-  ip_cidr_range            = "10.127.0.0/20"
-  network                  = google_compute_network.default.self_link
-  region                   = var.group2_region
-  private_ip_google_access = true
-}
-
-# Router and Cloud NAT are required for installing packages from repos (apache, php etc)
-resource "google_compute_router" "group2" {
-  name    = "${var.network_prefix}-gw-group2"
-  network = google_compute_network.default.self_link
-  region  = var.group2_region
-}
-
-module "cloud-nat-group2" {
- # source     = "terraform-google-modules/cloud-nat/google"
-  source = "app.terraform.io/Bruttech/cloudnat/google"
-  version    = "1.4.0"
-  router     = google_compute_router.group2.name
-  project_id = var.project
-  region     = var.group2_region
-  name       = "${var.network_prefix}-cloud-nat-group2"
-}
-
-# [START cloudloadbalancing_ext_http_gce]
-module "gce-lb-http" {
-#  source  = "GoogleCloudPlatform/lb-http/google"
-  source = "app.terraform.io/Bruttech/lb-http/google"
-  version = "~> 5.1"
-  name    = var.network_prefix
+resource "google_compute_region_backend_service" "default" {
   project = var.project
-  target_tags = [
-    "${var.network_prefix}-group1",
-    module.cloud-nat-group1.router_name,
-    "${var.network_prefix}-group2",
-    module.cloud-nat-group2.router_name
-  ]
-  firewall_networks = [google_compute_network.default.name]
+  name = {
+    "tcp"   = "${var.name}-with-tcp-hc",
+    "http"  = "${var.name}-with-http-hc",
+    "https" = "${var.name}-with-https-hc",
+  }[var.health_check["type"]]
+  region   = var.region
+  protocol = var.ip_protocol
+  network  = data.google_compute_network.network.self_link
+  # Do not try to add timeout_sec, as it is has no impact. See https://github.com/terraform-google-modules/terraform-google-lb-internal/issues/53#issuecomment-893427675
+  connection_draining_timeout_sec = var.connection_draining_timeout_sec
+  session_affinity                = var.session_affinity
+  dynamic "backend" {
+    for_each = var.backends
+    content {
+      group       = lookup(backend.value, "group", null)
+      description = lookup(backend.value, "description", null)
+      failover    = lookup(backend.value, "failover", null)
+    }
+  }
+  health_checks = concat(google_compute_health_check.tcp.*.self_link, google_compute_health_check.http.*.self_link, google_compute_health_check.https.*.self_link)
+}
 
-  backends = {
-    default = {
+resource "google_compute_health_check" "tcp" {
+  provider = google-beta
+  count    = var.health_check["type"] == "tcp" ? 1 : 0
+  project  = var.project
+  name     = "${var.name}-hc-tcp"
 
-      description                     = null
-      protocol                        = "HTTP"
-      port                            = 80
-      port_name                       = "http"
-      timeout_sec                     = 10
-      connection_draining_timeout_sec = null
-      enable_cdn                      = false
-      security_policy                 = null
-      session_affinity                = null
-      affinity_cookie_ttl_sec         = null
-      custom_request_headers          = null
-      custom_response_headers         = null
+  timeout_sec         = var.health_check["timeout_sec"]
+  check_interval_sec  = var.health_check["check_interval_sec"]
+  healthy_threshold   = var.health_check["healthy_threshold"]
+  unhealthy_threshold = var.health_check["unhealthy_threshold"]
 
-      health_check = {
-        check_interval_sec  = null
-        timeout_sec         = null
-        healthy_threshold   = null
-        unhealthy_threshold = null
-        request_path        = "/"
-        port                = 80
-        host                = null
-        logging             = null
-      }
+  tcp_health_check {
+    port         = var.health_check["port"]
+    request      = var.health_check["request"]
+    response     = var.health_check["response"]
+    port_name    = var.health_check["port_name"]
+    proxy_header = var.health_check["proxy_header"]
+  }
 
-      log_config = {
-        enable      = true
-        sample_rate = 1.0
-      }
-
-      groups = [
-        {
-          group                        = module.mig1.instance_group
-          balancing_mode               = null
-          capacity_scaler              = null
-          description                  = null
-          max_connections              = null
-          max_connections_per_instance = null
-          max_connections_per_endpoint = null
-          max_rate                     = null
-          max_rate_per_instance        = null
-          max_rate_per_endpoint        = null
-          max_utilization              = null
-        },
-        {
-          group                        = module.mig2.instance_group
-          balancing_mode               = null
-          capacity_scaler              = null
-          description                  = null
-          max_connections              = null
-          max_connections_per_instance = null
-          max_connections_per_endpoint = null
-          max_rate                     = null
-          max_rate_per_instance        = null
-          max_rate_per_endpoint        = null
-          max_utilization              = null
-        },
-      ]
-
-      iap_config = {
-        enable               = false
-        oauth2_client_id     = ""
-        oauth2_client_secret = ""
-      }
+  dynamic "log_config" {
+    for_each = var.health_check["enable_log"] ? [true] : []
+    content {
+      enable = true
     }
   }
 }
-# [END cloudloadbalancing_ext_http_gce]
+
+resource "google_compute_health_check" "http" {
+  provider = google-beta
+  count    = var.health_check["type"] == "http" ? 1 : 0
+  project  = var.project
+  name     = "${var.name}-hc-http"
+
+  timeout_sec         = var.health_check["timeout_sec"]
+  check_interval_sec  = var.health_check["check_interval_sec"]
+  healthy_threshold   = var.health_check["healthy_threshold"]
+  unhealthy_threshold = var.health_check["unhealthy_threshold"]
+
+  http_health_check {
+    port         = var.health_check["port"]
+    request_path = var.health_check["request_path"]
+    host         = var.health_check["host"]
+    response     = var.health_check["response"]
+    port_name    = var.health_check["port_name"]
+    proxy_header = var.health_check["proxy_header"]
+  }
+
+  dynamic "log_config" {
+    for_each = var.health_check["enable_log"] ? [true] : []
+    content {
+      enable = true
+    }
+  }
+}
+
+resource "google_compute_health_check" "https" {
+  provider = google-beta
+  count    = var.health_check["type"] == "https" ? 1 : 0
+  project  = var.project
+  name     = "${var.name}-hc-https"
+
+  timeout_sec         = var.health_check["timeout_sec"]
+  check_interval_sec  = var.health_check["check_interval_sec"]
+  healthy_threshold   = var.health_check["healthy_threshold"]
+  unhealthy_threshold = var.health_check["unhealthy_threshold"]
+
+  https_health_check {
+    port         = var.health_check["port"]
+    request_path = var.health_check["request_path"]
+    host         = var.health_check["host"]
+    response     = var.health_check["response"]
+    port_name    = var.health_check["port_name"]
+    proxy_header = var.health_check["proxy_header"]
+  }
+
+  dynamic "log_config" {
+    for_each = var.health_check["enable_log"] ? [true] : []
+    content {
+      enable = true
+    }
+  }
+}
+
+resource "google_compute_firewall" "default-ilb-fw" {
+  count   = var.create_backend_firewall ? 1 : 0
+  project = var.network_project == "" ? var.project : var.network_project
+  name    = "${var.name}-ilb-fw"
+  network = data.google_compute_network.network.name
+
+  allow {
+    protocol = lower(var.ip_protocol)
+    ports    = var.ports
+  }
+
+  source_ranges           = var.source_ip_ranges
+  source_tags             = var.source_tags
+  source_service_accounts = var.source_service_accounts
+  target_tags             = var.target_tags
+  target_service_accounts = var.target_service_accounts
+
+  dynamic "log_config" {
+    for_each = var.firewall_enable_logging ? [true] : []
+    content {
+      metadata = "INCLUDE_ALL_METADATA"
+    }
+  }
+}
+
+resource "google_compute_firewall" "default-hc" {
+  count   = var.create_health_check_firewall ? 1 : 0
+  project = var.network_project == "" ? var.project : var.network_project
+  name    = "${var.name}-hc"
+  network = data.google_compute_network.network.name
+
+  allow {
+    protocol = "tcp"
+    ports    = [var.health_check["port"]]
+  }
+
+  source_ranges           = ["130.211.0.0/22", "35.191.0.0/16"]
+  target_tags             = var.target_tags
+  target_service_accounts = var.target_service_accounts
+
+  dynamic "log_config" {
+    for_each = var.firewall_enable_logging ? [true] : []
+    content {
+      metadata = "INCLUDE_ALL_METADATA"
+    }
+  }
+}
