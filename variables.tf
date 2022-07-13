@@ -38,5 +38,5 @@ variable "gcp_zone_1" {
 # define private subnet
 variable "private_subnet_cidr_1" {
   type = string
-  description = "private subnet CIDR 1"
+  description = "private_subnet_CIDR 1"
 }
