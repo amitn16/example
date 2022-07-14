@@ -43,7 +43,8 @@ variable "app_environment" {
   description = "Application environment"
 }
 
-variable "app_node_count" {
+/* variable "app_node_count" {
   type = string
   description = "Number of servers to build"
 }
+*/
