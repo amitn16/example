@@ -14,27 +14,11 @@
  * limitations under the License.
  */
 
-variable "project" {
-  type = string
-  default = "lithe-bonito-356116"
+output "load-balancer-ip" {
+  value = module.gce-lb-http.external_ip
 }
 
-variable "target_size" {
-  type    = number
-  default = 2
-}
-
-variable "group1_region" {
-  type    = string
-  default = "us-west1"
-}
-
-variable "group2_region" {
-  type    = string
-  default = "us-east1"
-}
-
-variable "network_prefix" {
-  type    = string
-  default = "multi-mig-lb-http"
+output "load-balancer-ipv6" {
+  value       = module.gce-lb-http.ipv6_enabled ? module.gce-lb-http.external_ipv6_address : "undefined"
+  description = "The IPv6 address of the load-balancer, if enabled; else \"undefined\""
 }

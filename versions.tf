@@ -1,5 +1,5 @@
 /**
- * Copyright 2019 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,19 @@
  * limitations under the License.
  */
 
-variable "project" {
-  type = string
-  default = "lithe-bonito-356116"
-}
-
-variable "target_size" {
-  type    = number
-  default = 2
-}
-
-variable "group1_region" {
-  type    = string
-  default = "us-west1"
-}
-
-variable "group2_region" {
-  type    = string
-  default = "us-east1"
-}
-
-variable "network_prefix" {
-  type    = string
-  default = "multi-mig-lb-http"
+terraform {
+  required_version = ">= 0.13"
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 3.53"
+    }
+    google-beta = {
+      source  = "hashicorp/google-beta"
+      version = "~> 3.53"
+    }
+    template = {
+      source = "hashicorp/template"
+    }
+  }
 }
