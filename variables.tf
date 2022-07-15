@@ -1,5 +1,5 @@
 # define GCP project name
-/*variable "project" {
+variable "project" {
   type = string
   description = "GCP project name"
   default = "lithe-bonito-356116"
@@ -9,13 +9,13 @@
 variable "region" {
   type = string
   description = "GCP region"
-  default     = "us-central"
+  default     = "us-centra-l"
 }
 # define GCP zone
 variable "zone" {
   type = string
   description = "GCP zone"
-  default     = "us-central1"
+  default     = "us-central-1-a"
 }
 
 # define private subnet
@@ -29,22 +29,5 @@ variable "private_subnet_cidr_1" {
 variable "app_name" {
   type = string
   description = "Application name"
+  default = "app1"
 }
-
-# define application domain
-variable "app_domain" {
-  type = string
-  description = "Application domain"
-}
-
-# define application environment
-variable "app_environment" {
-  type = string
-  description = "Application environment"
-}
-
-variable "app_node_count" {
-  type = string
-  description = "Number of servers to build"
-}
-*/
