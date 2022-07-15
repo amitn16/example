@@ -28,7 +28,4 @@ module "vm" {
   image = var.image
   machine_type = var.machine_type
 }
-  network_interface {
-  network = google_compute_network.vpc.name
-  subnetwork = google_compute_subnetwork.private_subnet_1.name
-  }
+
