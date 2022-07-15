@@ -17,7 +17,7 @@ module "network" {
 
 module "vm" {
   source  = "app.terraform.io/Bruttech/vm/google"
-  version = "1.0.3"
+  version = "1.0.4"
   # insert required variables here
   depends_on = [module.network]
   app = var.app
