@@ -1,5 +1,5 @@
 # define GCP project name
-variable "project" {
+/*variable "project" {
   type = string
   description = "GCP project name"
   default = "lithe-bonito-356116"
@@ -47,3 +47,4 @@ variable "app_node_count" {
   type = string
   description = "Number of servers to build"
 }
+*/
