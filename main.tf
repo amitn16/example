@@ -19,7 +19,7 @@ module "vm" {
   source  = "app.terraform.io/Bruttech/vm/google"
   version = "1.0.0"
   # insert required variables here
-  depends_on = module_network
+  depends_on = _module.network
   app = var.app
   private_subnet_cidr_1 = var.private_subnet_cidr_1
   project = var.project
