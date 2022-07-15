@@ -17,7 +17,7 @@ module "network" {
 
 module "vm" {
   source  = "app.terraform.io/Bruttech/vm/google"
-  version = "1.0.2"
+  version = "1.0.3"
   # insert required variables here
   depends_on = [module.network]
   app = var.app
@@ -28,11 +28,3 @@ module "vm" {
   image = var.image
   machine_type = var.machine_type
   }
-
-resource "google_compute_instance" "Instance" {
-    depends_on  = [module.vm]
-    network_interface {
-    network = google_compute_network.vpc.name
-    subnetwork = google_compute_subnetwork.private_subnet_1.name
-  }
-}
