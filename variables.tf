@@ -22,7 +22,7 @@ variable "zone" {
 variable "private_subnet_cidr_1" {
   type = string
   description = "private_subnet_CIDR 1"
-  default     = "10.10.1.0/24"
+  default     = "10.1.11.0/24"
 }
 
 # define application name
