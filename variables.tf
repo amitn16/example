@@ -9,7 +9,7 @@ variable "project" {
 variable "region" {
   type = string
   description = "GCP region"
-  default     = "us-centra-l"
+  default     = "us-central-l"
 }
 # define GCP zone
 variable "zone" {
