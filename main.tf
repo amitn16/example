@@ -15,3 +15,16 @@ module "network" {
   zone = var.zone
 }
 
+module "vm" {
+  source  = "app.terraform.io/Bruttech/vm/google"
+  version = "1.0.0"
+  # insert required variables here
+  depends_on = module.network
+  app = var.app
+  private_subnet_cidr_1 = var.private_subnet_cidr_1
+  project = var.project
+  region = var.region
+  zone = var.zone
+  image = var.image
+  machine_type = var.machine_type
+}
