@@ -43,7 +43,7 @@ variable "app" {
 variable "image" {
   type = string
   description = "image name"
-  default = "ubuntu-os-cloud/ubuntu-1804-lts"
+  default = "centos-cloud/centos-7"
 }
 
 # define application name
