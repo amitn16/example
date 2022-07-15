@@ -31,3 +31,24 @@ variable "app_name" {
   description = "Application name"
   default = "app3"
 }
+
+# define host name
+variable "app" {
+  type = string
+  description = "host name"
+  default = "apphost"
+}
+
+# define application name
+variable "image" {
+  type = string
+  description = "image name"
+  default = "ubuntu-os-cloud/ubuntu-1804-lts"
+}
+
+# define application name
+variable "machine_type" {
+  type = string
+  description = "machine name"
+  default = "e2-micro"
+}
