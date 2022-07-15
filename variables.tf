@@ -29,5 +29,5 @@ variable "private_subnet_cidr_1" {
 variable "app_name" {
   type = string
   description = "Application name"
-  default = "app1"
+  default = "app3"
 }
