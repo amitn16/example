@@ -9,13 +9,13 @@ variable "project" {
 variable "region" {
   type = string
   description = "GCP region"
-  default     = "us-central-1"
+  default     = "us-central1"
 }
 # define GCP zone
 variable "zone" {
   type = string
   description = "GCP zone"
-  default     = "us-central-1-a"
+  default     = "us-central1-a"
 }
 
 # define private subnet
