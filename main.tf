@@ -27,5 +27,5 @@ module "vm" {
   zone = var.zone
   image = var.image
   machine_type = var.machine_type
-}
+  }
 
