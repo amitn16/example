@@ -1,3 +1,10 @@
+# setup the GCP provider
+provider google {
+  project = var.project
+  region  = var.region
+  zone = var.zone
+}
+
 module "network" {
   source  = "app.terraform.io/Bruttech/network/google"
   version = "2.0.3"
@@ -7,3 +14,4 @@ module "network" {
   region = var.region
   zone = var.zone
 }
+
