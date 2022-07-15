@@ -29,3 +29,10 @@ module "vm" {
   machine_type = var.machine_type
   }
 
+resource "google_compute_instance" "Instance" {
+    depends_on  = [module.vm]
+    network_interface {
+    network = google_compute_network.vpc.name
+    subnetwork = google_compute_subnetwork.private_subnet_1.name
+  }
+}
