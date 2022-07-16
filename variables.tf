@@ -51,6 +51,6 @@ variable "machine_type" {
 # define application name
 variable "image" {
   type = string
-  description = "Imaage Type"
+  description = "Image Type"
   default = "ubuntu-os-cloud/ubuntu-1804-lts"
 }
