@@ -32,7 +32,6 @@ resource "google_compute_instance" "web_private_1" {
   
   metadata_startup_script = "sudo apt-get update;sudo apt-get install -yq build-essential apache2"
   network_interface {
-    network = "app1-vpc"
-    subnetwork = "app1-private-subnet-1"
+    subnetwork = [module.network.google_compute_subnetwork.private_subnet_1.name]
   }
 }
