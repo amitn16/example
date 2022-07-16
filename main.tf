@@ -22,7 +22,7 @@ resource "google_compute_instance" "web_private_1" {
   name = "${var.app_name}-vm1"
   machine_type = "e2-micro"
   zone = var.zone
-  hostname = "${var.app_name}-vm1.${var.app_domain}"
+  hostname = "${var.app_name}-vm1"
   tags = ["ssh","http"]
   boot_disk {
     initialize_params {
