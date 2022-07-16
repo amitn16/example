@@ -18,6 +18,7 @@ module "network" {
 data "google_compute_network" "vpc" {
   depends_on = [module.network]
   name = data.google_compute_network.vpc.name
+  subnetwork = data.var.google_compute_subnetwork.private_subnet_1.name
 }
 
 # Create Google Cloud VMs | vm.tf
@@ -38,7 +39,7 @@ resource "google_compute_instance" "web_private_1" {
 
   metadata_startup_script = "sudo apt-get update;sudo apt-get install -yq build-essential apache2"
   network_interface {
-  network = [data.google_compute_network.vpc.name]
-  subnetwork = [data.var.google_compute_subnetwork.private_subnet_1.name]
+  network = data.google_compute_network.vpc.name
+  subnetwork = data.var.google_compute_subnetwork.private_subnet_1.name
   }
 }
