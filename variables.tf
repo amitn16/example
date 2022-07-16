@@ -33,3 +33,10 @@ variable "app_name" {
   description = "Application name"
   default = "app1"
 }
+
+# define application name
+variable "app_domain" {
+  type = string
+  description = "Application domain"
+  default = "bruttech"
+}
