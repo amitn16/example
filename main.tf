@@ -29,12 +29,15 @@ resource "google_compute_instance" "web_private_1" {
       image = var.image
     }
   }
-  
-  metadata_startup_script = "sudo apt-get update;sudo apt-get install -yq build-essential apache2"
-  network_interface {
-  data "google_compute_network" "vpc" {
+
+data "google_compute_network" "vpc" {
   network    = var.google_compute_network.vpc.name
   subnetwork = var.google_compute_subnetwork.private_subnet_1.name
 }
+
+  metadata_startup_script = "sudo apt-get update;sudo apt-get install -yq build-essential apache2"
+  network_interface {
+  network = data.google_compute_network.vpc.name
+  subnetwork = data.var.google_compute_subnetwork.private_subnet_1.name
   }
 }
