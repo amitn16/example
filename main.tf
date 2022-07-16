@@ -15,6 +15,12 @@ module "network" {
   zone = var.zone
 }
 
+data "google_compute_network" "vpc" {
+  depends_on = [module.network]
+  network    = var.google_compute_network.vpc.name
+  subnetwork = var.google_compute_subnetwork.private_subnet_1.name
+}
+
 # Create Google Cloud VMs | vm.tf
 # Create web server #1
 resource "google_compute_instance" "web_private_1" {
@@ -29,11 +35,6 @@ resource "google_compute_instance" "web_private_1" {
       image = var.image
     }
   }
-
-data "google_compute_network" "vpc" {
-  network    = var.google_compute_network.vpc.name
-  subnetwork = var.google_compute_subnetwork.private_subnet_1.name
-}
 
   metadata_startup_script = "sudo apt-get update;sudo apt-get install -yq build-essential apache2"
   network_interface {
