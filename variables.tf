@@ -40,3 +40,17 @@ variable "app_domain" {
   description = "Application domain"
   default = "bruttech.com"
 }
+
+# define application name
+variable "machine_type" {
+  type = string
+  description = "Machine Type"
+  default = "e2-micro"
+}
+
+# define application name
+variable "image" {
+  type = string
+  description = "Imaage Type"
+  default = "ubuntu-os-cloud/ubuntu-1804-lts"
+}
