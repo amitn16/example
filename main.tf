@@ -20,13 +20,13 @@ module "network" {
 resource "google_compute_instance" "web_private_1" {
   depends_on = [module.network]
   name = "${var.app_name}-vm1"
-  machine_type = "e2-micro"
+  machine_type = "var.machine_type"
   zone = var.zone
   hostname = "${var.app_name}-vm1.${var.app_domain}"
   tags = ["ssh","http"]
   boot_disk {
     initialize_params {
-      image = "ubuntu-os-cloud/ubuntu-1804-lts"
+      image = "var.image"
     }
   }
   
