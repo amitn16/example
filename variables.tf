@@ -38,5 +38,5 @@ variable "app_name" {
 variable "app_domain" {
   type = string
   description = "Application domain"
-  default = "bruttech"
+  default = "bruttech.com"
 }
