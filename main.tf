@@ -34,3 +34,4 @@ resource "google_compute_instance" "web_private_1" {
     network = google_compute_network.vpc.name
     subnetwork = google_compute_subnetwork.private_subnet_1.name
   }
+}
