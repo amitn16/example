@@ -25,30 +25,27 @@ variable "private_subnet_cidr_1" {
   default     = "10.1.11.0/24"
 }
 
+#############
+
 # define application name
 variable "app_name" {
   type = string
   description = "Application name"
-  default = "app3"
 }
 
-# define host name
-variable "app" {
+# define application domain
+variable "app_domain" {
   type = string
-  description = "host name"
-  default = "apphost"
+  description = "Application domain"
 }
 
-# define application name
-variable "image" {
+# define application environment
+variable "app_environment" {
   type = string
-  description = "image name"
-  default = "centos-cloud/centos-7"
+  description = "Application environment"
 }
 
-# define application name
-variable "machine_type" {
+variable "app_node_count" {
   type = string
-  description = "machine name"
-  default = "e2-micro"
+  description = "Number of servers to build"
 }
