@@ -19,7 +19,7 @@ module "network" {
 # Create web server #1
 resource "google_compute_instance" "web_private_1" {
   depends_on = [module.network]
-  name = "${var.app_name}-vm1.${app_domain}"
+  name = "${var.app_name}-vm1.${var.app_domain}"
   machine_type = "e2-micro"
   zone = var.zone
   hostname = "${var.app_name}-vm1"
