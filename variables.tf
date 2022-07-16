@@ -26,3 +26,10 @@ variable "private_subnet_cidr_1" {
 }
 
 #############
+
+# define application name
+variable "app_name" {
+  type = string
+  description = "Application name"
+  default = "app1"
+}
