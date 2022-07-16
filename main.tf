@@ -17,8 +17,7 @@ module "network" {
 
 data "google_compute_network" "vpc" {
   depends_on = [module.network]
-  network    = var.google_compute_network.vpc.name
-  subnetwork = var.google_compute_subnetwork.private_subnet_1.name
+  name = data.google_compute_network.vpc.name
 }
 
 # Create Google Cloud VMs | vm.tf
