@@ -18,11 +18,10 @@ module "network" {
 # Create Google Cloud VMs | vm.tf
 # Create web server #1
 resource "google_compute_instance" "web_private_1" {
-  depends_on = [module.network]
-  name = "${var.app_name}-vm1.${var.app_domain}"
+  name = "${var.app_name}-vm1"
   machine_type = "e2-micro"
   zone = var.zone
-  hostname = "${var.app_name}-vm1"
+  hostname = "${var.app_name}-vm1.${var.app_domain}"
   tags = ["ssh","http"]
   boot_disk {
     initialize_params {
